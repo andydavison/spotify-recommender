@@ -1,5 +1,122 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300|Montserrat+Alternates:200i');
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  
+  background-color: #2E294E;
+  color: #F1E9DA;
+  /*#AD1989 light purple
+  #88B04B turtle green
+  #541388 darker purple
+  #F1E9DA eggshell
+  #2E294E dark blue*/
+  /*FF6666*/
+}
+
+div {
+	/*outline: 2px solid #AD1989;*/
+}
+
+h1 {
+  font-size: 60px;
+}
+
+.login {
+  padding-top: 50px;
+  background: linear-gradient(#541388,#2E294E);
+}
+
+.login button, .mode .btn-group {
+  margin-top: 20px;
+}
+
+.title {
+  color: #F1E9DA;
+  background-color: #88B04B;
+  padding: 20px;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.purple {
+  color: #AD1989;
+}
+
+.mode {
+  padding: 20px 0;
+  background: linear-gradient(#541388,#2E294E);
+}
+
+.lower-content {
+  padding-top: 20px;
+}
+
+.top-btn {
+  margin-bottom: 20px;
+}
+
+.btn-custom {
+  color: #F1E9DA;
+  background-color: #88B04B;
+  border-color: #F1E9DA;
+}
+
+.btn-custom:focus,
+.btn-custom.focus,
+.btn-custom:hover,
+.btn-custom:active,
+.btn-custom.active,
+.btn-custom:active:hover,
+.btn-custom.active:hover,
+.btn-custom:active:focus,
+.btn-custom.active:focus,
+.btn-custom:active,
+.btn-custom.active {
+  color: #F1E9DA;
+  background-color: #AD1989;
+  border-color: #F1E9DA;
+}
+
+.input-custom {
+  color: #2E294E;
+  background-color: #F1E9DA;
+}
+
+.result-track {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  min-height: 64px;
+  border-top: 1px solid #F1E9DA;
+}
+
+.result-track p {
+  margin: 0;
+}
+
+.result-track-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
 }
