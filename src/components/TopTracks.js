@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Row, Col, Button} from 'react-bootstrap';
-import Loading from './Loading';
 
 class TopTracks extends Component {
 
