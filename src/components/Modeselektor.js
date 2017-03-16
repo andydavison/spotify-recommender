@@ -10,8 +10,7 @@ class Modeselektor extends Component {
         </h2>
         <ButtonGroup bsSize="large">
           <Button className="btn-custom" active={this.props.mode===1} onClick={()=>this.props.onModeChange(1)}>Your Faves</Button>
-          <Button className="btn-custom" active={this.props.mode===2} onClick={()=>this.props.onModeChange(2)}>Track ID</Button>
-          <Button className="btn-custom" active={this.props.mode===3} onClick={()=>this.props.onModeChange(3)}>Values</Button>
+          <Button className="btn-custom" active={this.props.mode===2} onClick={()=>this.props.onModeChange(2)}>Values</Button>
         </ButtonGroup>
       </div>
     );

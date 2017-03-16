@@ -1,5 +1,9 @@
 export default {
-  mode: 3,
+  user: {},
+  topTracks: {},
+  currentTopTrack: 99,
+  topTracksValues: {},
+  mode: 0,
   loggedIn: false,
   values: {
     danceability: 50,

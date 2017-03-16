@@ -43,6 +43,12 @@ h1 {
   color: #AD1989;
 }
 
+.user {
+  background-color: #541388;
+  padding: 1px;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
 .mode {
   padding: 20px 0;
   background: linear-gradient(#541388,#2E294E);
