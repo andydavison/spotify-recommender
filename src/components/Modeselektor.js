@@ -8,6 +8,7 @@ class Modeselektor extends Component {
         <h2>
           Choose your recommendation mode:
         </h2>
+        <p>Generate a playlist based on a track you love, or enter seed values manually</p>
         <ButtonGroup bsSize="large">
           <Button className="btn-custom" active={this.props.mode===1} onClick={()=>this.props.onModeChange(1)}>Your Faves</Button>
           <Button className="btn-custom" active={this.props.mode===2} onClick={()=>this.props.onModeChange(2)}>Values</Button>

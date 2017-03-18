@@ -8,7 +8,7 @@ class ResultList extends Component {
 
     if (this.props.results.length===0) {
     	return (
-        <p>Generate a playlist to see the results here</p>)
+        <h4>Generate a playlist to see the results here</h4>)
     }
     let resultListMarkup = this.props.results.map(result => <ResultTrack key={result.id} imgSrc={result.imgSrc} artist={result.artist} track={result.track}/>);
     return (

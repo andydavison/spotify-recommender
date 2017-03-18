@@ -20,6 +20,7 @@ class ValueForm extends Component {
   render() {
     return (
       <div>
+        <h4>Enter seed values from 0-100</h4>
         <Button className="btn-custom top-btn" onClick={this.handleGenerate}>Generate Playlist</Button>
         <Form horizontal>
         <FormGroup controlId="acousticness">
@@ -47,7 +48,7 @@ class ValueForm extends Component {
           </Col>
         </FormGroup>
         <FormGroup controlId="valence">
-          <Col componentClass={ControlLabel} md={6}>Valence</Col>
+          <Col componentClass={ControlLabel} md={6}>Positivity</Col>
           <Col md={6}>
             <FormControl className="input-custom" onChange={this.handleValueChange} type="number" max={100} min={0} value={this.props.values.valence}/>
           </Col>
