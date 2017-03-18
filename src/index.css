@@ -89,6 +89,14 @@ h1 {
   background-color: #F1E9DA;
 }
 
+.saveSection {
+  height: 105px;
+}
+
+.saveSection h3 {
+  margin: 0;
+}
+
 .result-track {
   padding-bottom: 10px;
   padding-top: 10px;

@@ -19,6 +19,7 @@ class App extends Component {
     this.stateKey = 'andy_spotify_auth_state';
     this.params = this.getHashParams();
     console.log("params:"+JSON.stringify(this.params));
+    this.headers = {headers:{'Authorization': 'Bearer ' + this.params.access_token}};
     this.state = testState;
     this.handleValueChange = this.handleValueChange.bind(this);
     this.generateFromValues = this.generateFromValues.bind(this);
@@ -27,6 +28,7 @@ class App extends Component {
     this.handleModeChange = this.handleModeChange.bind(this);
     this.getNewTopTrack = this.getNewTopTrack.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
+    this.getSourcePlaylist = this.getSourcePlaylist.bind(this);
   }
 
   componentDidMount() {
@@ -36,14 +38,14 @@ class App extends Component {
       localStorage.removeItem(this.stateKey);
       if (this.params.access_token) {
         //get user info
-        axios.get('https://api.spotify.com/v1/me',{headers:{'Authorization': 'Bearer ' + this.params.access_token}})
+        axios.get('https://api.spotify.com/v1/me',this.headers)
         .then(res => {
           const user = {id:res.data.id, name:res.data.display_name};
           this.setState({user:user});
         });
 
         //get top tracks...
-        axios.get('https://api.spotify.com/v1/me/top/tracks?limit=15',{headers:{'Authorization': 'Bearer ' + this.params.access_token}})
+        axios.get('https://api.spotify.com/v1/me/top/tracks?limit=30',this.headers)
         .then(topTracksResponse => {
           let topTrackIds = [];
           const topTracks = topTracksResponse.data.items.map(track=>{
@@ -57,13 +59,20 @@ class App extends Component {
           this.setState({topTracks:topTracks});
           
           //...then get their audio features
-          axios.get('https://api.spotify.com/v1/audio-features?ids='+topTrackIds.join(','),{headers:{'Authorization': 'Bearer ' + this.params.access_token}})
+          axios.get('https://api.spotify.com/v1/audio-features?ids='+topTrackIds.join(','),this.headers)
           .then(topTracksAFResponse => {
             this.setState({topTracksValues:topTracksAFResponse.data.audio_features});
           })
         });
 
-        //IF LIVE PLAYLIST UPDATING, get pool tracks, then get audio analysis
+        //Get source tracks and audio analysis
+        let next = 'https://api.spotify.com/v1/users/ajd1989/playlists/4aHJ73VmJTeiv5byl3RSn0/tracks?fields=items(track(id,name,album(images),artists(name))),next';
+        let fullSourceTracks = [];
+
+        
+
+        this.getSourcePlaylist(next, fullSourceTracks);
+
         //update 'logged in' state
         this.setState({loggedIn:true});
       } else {
@@ -71,6 +80,42 @@ class App extends Component {
         this.setState({loggedIn:false});
       }
     }
+  }
+
+  getSourcePlaylist(url, fullSourceTracks) {
+    axios.get(url,this.headers)
+    .then(sourcePlaylistResponse => {
+      //make array of track objects and array of ids from response
+      let sourceTrackIds = [];
+      let sourceTracks = sourcePlaylistResponse.data.items.map(item=>{
+        const imgSrc = item.track.album.images[item.track.album.images.length-1].url;
+        const name = item.track.name;
+        const artist = item.track.artists.map(artist => artist.name).join(', ');
+        const id = item.track.id;
+        sourceTrackIds.push(id);
+        return {imgSrc:imgSrc, track:name, artist:artist, id:id};
+      });
+      //get audio features for each track
+      axios.get('https://api.spotify.com/v1/audio-features?ids='+sourceTrackIds.join(','),this.headers)
+      .then(sourceAFResponse => {
+        //add audio features to track array
+        sourceTracks.forEach((track, index, arr)=>{
+          arr[index].danceability = sourceAFResponse.data.audio_features[index].danceability;
+          arr[index].energy = sourceAFResponse.data.audio_features[index].energy;
+          arr[index].acousticness = sourceAFResponse.data.audio_features[index].acousticness;
+          arr[index].instrumentalness = sourceAFResponse.data.audio_features[index].instrumentalness;
+          arr[index].valence = sourceAFResponse.data.audio_features[index].valence;
+        });
+        //append track array to full track array
+        fullSourceTracks = fullSourceTracks.concat(sourceTracks);
+        //if next is not null, call again
+        if(sourcePlaylistResponse.data.next) {
+          this.getSourcePlaylist(sourcePlaylistResponse.data.next, fullSourceTracks);
+        } else {
+          this.setState({sourceTracks:fullSourceTracks});
+        }
+      });
+    });
   }
 
   getHashParams() {
@@ -95,7 +140,7 @@ class App extends Component {
 
   handleLoginClick() {
     const client_id = '158846b449064c7c8be3d9599be748c0'; // Your client id
-    const redirect_uri = 'http://localhost:3000'; // Your redirect uri
+    const redirect_uri = (process.env.NODE_ENV==='development'?'http://localhost:3000':'http://andydavison.github.io/spotify-recommender'); // Your redirect uri
     const state = this.generateRandomString(16);
     localStorage.setItem(this.stateKey, state);
     const scope = 'user-read-private user-read-email user-top-read playlist-modify-public';
@@ -134,52 +179,43 @@ class App extends Component {
   }
 
   generatePlaylist(values) {
-    const audioArray = this.state.audioFeatures.audio_features;
 
-    let distanceArray = audioArray.map(track => {
+    let distanceArray = this.state.sourceTracks.map(track => {
       const distance = Math.sqrt(Math.pow(track.danceability - values.danceability,2)+Math.pow(track.energy - values.energy,2)+Math.pow(track.acousticness - values.acousticness,2)+Math.pow(track.instrumentalness - values.instrumentalness,2)+Math.pow(track.valence - values.valence,2));
       return {id:track.id, distance:distance};
     });
     distanceArray.sort((a,b) => a.distance - b.distance);
-    let idArray = [];
+
+    let resultsIds = [];
     for (let i=0; i<10; i++) {
-      idArray.push(distanceArray[i].id);
+      resultsIds.push(distanceArray[i].id);
     }
-    const idList = idArray.join(',');
-    axios.get('https://api.spotify.com/v1/tracks?ids='+idList,{headers:{'Authorization': 'Bearer ' + this.params.access_token}})
-      .then(res => {
-        const results = res.data.tracks.map(track => {
-          const imgSrc = track.album.images[track.album.images.length-1].url;
-          const name = track.name;
-          const artist = track.artists.map(artist => artist.name).join(', ');
-          const id = track.id;
-          return {imgSrc:imgSrc, track:name, artist:artist, id:id};
-        });
-        this.setState({results:results});
-      });
+
+    const results = resultsIds.map(resultsId=>{
+      return this.state.sourceTracks.filter(sourceTrack=>sourceTrack.id===resultsId)[0];
+    });
+    this.setState({results:results, playlistSaved:false});
   }
 
   getNewTopTrack() {
     let newTrackIndex = this.state.currentTopTrack;
     while (newTrackIndex === this.state.currentTopTrack) {
-      newTrackIndex = Math.floor(Math.random()*15);
+      newTrackIndex = Math.floor(Math.random()*30);
     }
-    console.log("new top track index: "+newTrackIndex);
     this.setState({currentTopTrack:newTrackIndex});
-    console.log("new values: "+JSON.stringify(this.state.topTracksValues[this.state.currentTopTrack]));
     this.generatePlaylist(this.state.topTracksValues[newTrackIndex]);
   }
 
-  savePlaylist() {
+  savePlaylist(playlistName) {
     axios.post('https://api.spotify.com/v1/users/'+this.state.user.id+'/playlists',{
-      name:"Andy's Spotify Recommendation"
-    },{headers:{'Authorization': 'Bearer ' + this.params.access_token}})
+      name:playlistName
+    },this.headers)
     .then(res=>{
       let trackURIs = this.state.results.map(track=>"spotify:track:"+track.id);
       axios.post('https://api.spotify.com/v1/users/'+this.state.user.id+'/playlists/'+res.data.id+'/tracks',{
         uris:trackURIs
-      },{headers:{'Authorization': 'Bearer ' + this.params.access_token}})
-      .then(console.log("Playlist saved!"));
+      },this.headers)
+      .then(this.setState({playlistSaved:true}));
     })
   }
 
@@ -189,9 +225,11 @@ class App extends Component {
       let rightColContents = <div></div>;
       if (this.state.mode==1) {
         leftColContents = <TopTracks onNewTopTrack={this.getNewTopTrack} topTrack={this.state.topTracks[this.state.currentTopTrack]}/>;
+        rightColContents = <ResultList results={this.state.results} onSave={this.savePlaylist} playlistSaved={this.state.playlistSaved}/>;
       }
       if (this.state.mode==2) {
         leftColContents = <ValueForm values={this.state.values} onValueChange={this.handleValueChange} onGenerate={()=>{this.generateFromValues(this.state.values)}}/>;
+        rightColContents = <ResultList results={this.state.results} onSave={this.savePlaylist} playlistSaved={this.state.playlistSaved}/>;
       }
       return (
         <div className="App">
@@ -208,7 +246,7 @@ class App extends Component {
                 {leftColContents}
               </Col>
               <Col md={6}>
-                <ResultList results={this.state.results} onSave={this.savePlaylist}/>
+                {rightColContents}
               </Col>
             </Row>
           </Grid>

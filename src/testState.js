@@ -7,40 +7,12 @@ export default {
   loggedIn: false,
   values: {
     danceability: 50,
-    energy: 72,
-    speechiness: 5,
-    acousticness: 3,
-    instrumentalness: 0,
-    valence: 16
+    energy: 50,
+    acousticness: 50,
+    instrumentalness: 50,
+    valence: 50
   },
-  valueSrc: {
-    danceability: 0.5,
-    energy: 0.727,
-    speechiness: 0.0508,
-    acousticness: 0.0296,
-    instrumentalness: 0,
-    valence: 0.155
-  },
-  valuePool: [
-    {"danceability":0.499,"energy":0.727,"speechiness":0.0508,"acousticness":0.0296,"instrumentalness":0.000102,"valence":0.155},
-    {"danceability":0.82,"energy":0.908,"speechiness":0.124,"acousticness":0.328,"instrumentalness":0.00155,"valence":0.91},
-    {"danceability":0.587,"energy":0.887,"speechiness":0.056,"acousticness":0.0524,"instrumentalness":0.00612,"valence":0.574},
-    {"danceability":0.7,"energy":0.505,"speechiness":0.0373,"acousticness":0.00389,"instrumentalness":0.00412,"valence":0.57},
-    {"danceability":0.351,"energy":0.312,"speechiness":0.0341,"acousticness":0.836,"instrumentalness":0.00000655,"valence":0.244},
-    {"danceability":0.304,"energy":0.283,"speechiness":0.0344,"acousticness":0.897,"instrumentalness":0.931,"valence":0.16}
-  ],
-  results:[
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"The Killers",track:"Track 1"},
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"Band 2",track:"Track 2"},
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"Band 3",track:"Track 3"},
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"The Killers Again",track:"Track 4"},
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"Band5",track:"Track 5"},
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"The 6s",track:"Track 6"},
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"777",track:"Track 7"},
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"Eight",track:"Track 8"},
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"NEIN",track:"Track 9"},
-    {imgSrc:"https://i.scdn.co/image/d0186ad64df7d6fc5f65c20c7d16f4279ffeb815",artist:"Band 10 (The Killers)",track:"Track 10"}
-  ],
+  results:[],
   audioFeatures: 
   {
   "audio_features":[
