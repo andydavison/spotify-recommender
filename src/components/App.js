@@ -66,7 +66,7 @@ class App extends Component {
         });
 
         //Get source tracks and audio analysis
-        let next = 'https://api.spotify.com/v1/users/ajd1989/playlists/4aHJ73VmJTeiv5byl3RSn0/tracks?fields=items(track(id,name,album(images),artists(name))),next';
+        let next = 'https://api.spotify.com/v1/users/ajd1989/playlists/5euuxL979qNA0zQzES8fL0/tracks?fields=items(track(id,name,album(images),artists(name))),next';
         let fullSourceTracks = [];
 
         

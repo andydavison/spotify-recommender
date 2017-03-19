@@ -14,8 +14,8 @@ class TopTracks extends Component {
             </Col>
             <Col xs={7} className='top-track-text'>
               <div>
-                <p>{this.props.topTrack.track}</p>
-                <p>{this.props.topTrack.artist}</p>
+                <h4>{this.props.topTrack.track}</h4>
+                <h4>{this.props.topTrack.artist}</h4>
               </div>
             </Col>
           </Row>
