@@ -20,7 +20,6 @@ class Save extends Component {
   }
 
   render() {
-    let buttonText = "Save Playlist";
     if (this.props.playlistSaved) {
       return (
         <div className='saveSection'>
