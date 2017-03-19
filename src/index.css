@@ -12,7 +12,6 @@ body {
   #541388 darker purple
   #F1E9DA eggshell
   #2E294E dark blue*/
-  /*FF6666*/
 }
 
 div {
@@ -66,7 +65,7 @@ h4 {
 }
 
 .mode {
-  padding: 20px 0;
+  padding: 20px;
 }
 
 .lower-content {
@@ -100,7 +99,7 @@ h4 {
 }
 
 .input-custom {
-  color: #2E294E;
+  color: #541388;
   background-color: #F1E9DA;
 }
 
@@ -131,7 +130,7 @@ h4 {
   min-height: 64px;
 }
 
-.top-tracks {
+.top-tracks, .value-form {
   padding-bottom:40px;
 }
 

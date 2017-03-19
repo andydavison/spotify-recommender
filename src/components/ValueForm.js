@@ -19,7 +19,7 @@ class ValueForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className='value-form'>
         <h4>Enter seed values from 0-100</h4>
         <Button className="btn-custom top-btn" onClick={this.handleGenerate}>Generate Playlist</Button>
         <Form horizontal>
