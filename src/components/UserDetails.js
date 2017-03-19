@@ -4,7 +4,7 @@ class UserDetails extends Component {
   render() {
     return (
       <div className="user">
-        Hi there <span className="dark-purple">{this.props.user.name ? this.props.user.name : this.props.user.id}</span>
+        <h2>Hi there <span className="dark-purple">{this.props.user.name ? this.props.user.name : this.props.user.id}</span></h2>
       </div>
     );
   }

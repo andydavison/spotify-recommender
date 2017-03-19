@@ -234,7 +234,7 @@ class App extends Component {
       return (
         <div className="App">
           <div className="title">
-            <span className="purple">Andy's</span> Spotify Recommender
+            <h1><span className="purple">Andy's</span> Spotify Recommender</h1>
           </div>
           <UserDetails user={this.state.user}/>
           <Modeselektor mode={this.state.mode} onModeChange={this.handleModeChange}/>
@@ -254,7 +254,7 @@ class App extends Component {
       return (
         <div className="App">
           <div className="title">
-            <span className="purple">Andy's</span> Spotify Recommender
+            <h1><span className="purple">Andy's</span> Spotify Recommender</h1>
           </div>
           <Login onLoginClick={this.handleLoginClick}/>
         </div>
