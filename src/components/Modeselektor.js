@@ -6,7 +6,7 @@ class Modeselektor extends Component {
     return (
       <div className="mode">
         <h2>
-          Choose your recommendation mode:
+          Choose your recommendation mode
         </h2>
         <p>Generate a playlist based on a track you love, or enter seed values manually</p>
         <ButtonGroup bsSize="large">

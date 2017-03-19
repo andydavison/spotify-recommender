@@ -237,15 +237,13 @@ class App extends Component {
             <span className="purple">Andy's</span> Spotify Recommender
           </div>
           <UserDetails user={this.state.user}/>
-          <div>
-            <Modeselektor mode={this.state.mode} onModeChange={this.handleModeChange}/>
-          </div>
+          <Modeselektor mode={this.state.mode} onModeChange={this.handleModeChange}/>
           <Grid className="lower-content">
             <Row>
-              <Col md={6}>
+              <Col sm={6}>
                 {leftColContents}
               </Col>
-              <Col md={6}>
+              <Col sm={6}>
                 {rightColContents}
               </Col>
             </Row>

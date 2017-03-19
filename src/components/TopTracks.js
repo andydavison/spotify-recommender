@@ -8,24 +8,26 @@ class TopTracks extends Component {
     if(this.props.topTrack) {
       seedTrackContent = 
         <div>
-          <h3>Playlist generated from this track you love:</h3>
           <Row >
-            <Col md={5} >
+            <Col xs={5} >
               <img src={this.props.topTrack.imgSrc} width={150} alt=""/>
             </Col>
-            <Col md={7} >
-              <h3>{this.props.topTrack.track}</h3>
-              <p>{this.props.topTrack.artist}</p>
+            <Col xs={7} className='top-track-text'>
+              <div>
+                <p>{this.props.topTrack.track}</p>
+                <p>{this.props.topTrack.artist}</p>
+              </div>
             </Col>
           </Row>
         </div>;
     } else {
-      seedTrackContent = <p>Track details will be displayed here</p>
+      seedTrackContent = <div></div>;
     }
 
     return (
       <div className="top-tracks">
-        <Button className="btn-custom top-btn" onClick={this.props.onNewTopTrack}>Get A New Seed Track</Button>
+        <h4>Get Recommendations Based On A Favourite Track</h4>
+        <Button className="btn-custom top-btn" onClick={this.props.onNewTopTrack}>Generate A New Playlist</Button>
         {seedTrackContent}
       </div>
     );

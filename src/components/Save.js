@@ -24,7 +24,7 @@ class Save extends Component {
     if (this.props.playlistSaved) {
       return (
         <div className='saveSection'>
-          <h3>Playlist Saved!</h3>
+          <h4>Playlist Saved!</h4>
         </div>
       );
     } else {
